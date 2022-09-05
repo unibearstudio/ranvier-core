@@ -370,6 +370,11 @@ class Character extends Metadatable(EventEmitter) {
       this.removeItem(item);
     }
 
+    
+    if (this.equipment.has(slot)) {
+      this.unequip(slot);
+    }
+
     this.equipment.set(slot, item);
     item.isEquipped = true;
     item.equippedBy = this;
