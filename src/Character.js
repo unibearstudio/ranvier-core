@@ -358,10 +358,6 @@ class Character extends Metadatable(EventEmitter) {
    * @fires Item#equip
    */
   equip(item, slot) {
-    if (this.equipment.has(slot)) {
-      throw new EquipSlotTakenError();
-    }
-
     if (item.isEquipped) {
       throw new EquipAlreadyEquippedError();
     }
