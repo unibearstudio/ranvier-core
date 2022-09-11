@@ -98,7 +98,7 @@ class PlayerManager extends EventEmitter {
    * @param {boolean} force true to force reload from storage
    * @return {Player}
    */
-  async loadPlayer(state, account, username, force) {
+   async loadPlayer(state, account, username, force) {
     if (this.players.has(username) && !force) {
       return this.getPlayer(username);
     }
@@ -118,6 +118,29 @@ class PlayerManager extends EventEmitter {
     this.addPlayer(player);
     return player;
   }
+
+    /**
+   * Load a player for an account
+   * @param {GameState} state
+   * @param {Account} account
+   * @param {string} username
+   * @param {boolean} force true to force reload from storage
+   * @return {Player}
+   */
+     async getUnloadedPlayerEquipment(state, account, username) {
+      if (this.players.has(username)) {
+        return this.getPlayer(username);
+      }
+  
+      if (!this.loader) {
+        throw new Error('No entity loader configured for players');
+      }
+  
+      const data = await this.loader.fetch(username);
+      data.name = username;
+      console.log(data);
+      return data.equipment;
+    }
 
   /**
    * Turn player into a key used by this class's map
